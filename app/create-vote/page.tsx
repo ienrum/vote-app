@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { supabase } from "@/lib/supabase";
 import { TablesInsert } from "@/types/supabase";
-import { Option } from "@/app/vote/[id]/page";
+import { Option } from "@/app/apis/vote";
 
 type VoteData = TablesInsert<"votes">;
 

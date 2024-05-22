@@ -1,83 +1,36 @@
-"use client";
-
+import { getVote } from "@/app/apis/vote";
+import { submitVote } from "@/app/vote/[id]/actions";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { supabase } from "@/lib/supabase";
-import { Tables } from "@/types/supabase";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { Option } from "@/app/apis/vote";
 
-interface RadioGroupProps {
-  value: string;
-  onChange: (value: string) => void;
+interface PageProps {
+  params: { id: string };
 }
 
-const RadioGroup = ({
-  children,
-  value,
-  onChange,
-}: React.PropsWithChildren<RadioGroupProps>) => {
-  return (
-    <div
-      role="radiogroup"
-      onChange={(e) => onChange((e.target as HTMLInputElement).value)}
-    >
-      {children}
-    </div>
-  );
-};
+export default async function Vote({ params: { id: voteId } }: PageProps) {
+  const { data, error } = await getVote(voteId);
+  const options = JSON.parse(data?.options as string) as Option[];
+  const submitVoteWithParmas = submitVote.bind(null, voteId);
 
-type VoteData = Tables<"votes">;
-export interface Option {
-  id: string;
-  value: string;
-}
+  if (error) {
+    throw new Error(error.message);
+  }
 
-export default function Vote() {
-  const { id } = useParams();
-  const [voteData, setVoteData] = useState<VoteData | null>(null);
-  const [selectedOption, setSelectedOption] = useState("");
-  const [options, setOptions] = useState<Option[]>([]);
-
-  useEffect(() => {
-    if (id) {
-      const fetchVote = async () => {
-        const { data, error } = await supabase
-          .from("votes")
-          .select("*")
-          .eq("id", id)
-          .single();
-        if (error) {
-          console.error(error);
-        } else {
-          setVoteData(data);
-          setOptions(JSON.parse(data?.options as string));
-        }
-      };
-      fetchVote();
-    }
-  }, [id]);
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    alert(`투표가 제출되었습니다: ${selectedOption}`);
-    // 여기에 투표 결과를 저장하는 로직을 추가할 수 있습니다.
-  };
-
-  if (!voteData) {
-    return <p>로딩 중...</p>;
+  if (!data) {
+    throw new Error("투표를 찾을 수 없습니다.");
   }
 
   return (
     <Card className="mt-8">
-      <h1>{voteData.title}</h1>
-      <p className="mt-4">{voteData.description}</p>
-      <form onSubmit={handleSubmit} className="mt-4">
+      <h1>{data.title}</h1>
+      <p className="mt-4">{data.description}</p>
+      <form action={submitVoteWithParmas} className="mt-4">
         {options.map(({ id, value }, index) => (
           <Label key={index}>
-            <Input type="radio" value={id} required />
+            <Input type="radio" name="option" value={id} required />
             {value}
           </Label>
         ))}
