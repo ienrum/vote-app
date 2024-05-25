@@ -7,60 +7,45 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { supabase } from "@/lib/supabase";
-import { TablesInsert } from "@/types/supabase";
-import { Option } from "@/app/apis/vote";
-
-type VoteData = TablesInsert<"votes">;
+import { createVotePost } from "@/app/apis/vote";
 
 export default function CreateVote() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [options, setOptions] = useState<Option[]>([
+  const [options, setOptions] = useState<{ value: string }[]>([
     {
-      id: "0",
       value: "",
     },
     {
-      id: "1",
       value: "",
     },
   ]);
   const router = useRouter();
 
   const addOption = () => {
-    const newOptions: Option[] = [...options];
+    const newOptions: { value: string }[] = [...options];
     newOptions.push({
-      id: newOptions.length.toString(),
       value: "",
     });
     setOptions(newOptions);
   };
 
   const handleChangeOption = (index: number, value: string) => {
-    const newOptions: Option[] = [...options];
+    const newOptions: { value: string }[] = [...options];
     newOptions[index].value = value;
     setOptions(newOptions);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const voteData: VoteData = {
+    const voteData = {
       title,
       description,
-      options: JSON.stringify(options),
+      options,
     };
-    const { data, error } = await supabase
-      .from("votes")
-      .insert([voteData]) // get fastest timestamp
-      .select("*")
-      .single();
 
-    if (error) {
-      alert("투표 생성에 실패했습니다.");
-      return;
-    }
-    router.push(`/vote/${(data as VoteData).id}`);
+    const vote_id = await createVotePost(voteData);
+    router.push(`/vote/${vote_id}`);
   };
 
   return (

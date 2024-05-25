@@ -1,14 +1,16 @@
 "use server";
 
-import { supabase } from "@/lib/supabase";
+import { insertVoteResult } from "@/app/apis/vote";
+import { revalidatePath } from "next/cache";
 
 export const submitVote = async (voteId: string, formData: FormData) => {
   const selectedOptionId = formData.getAll("option")[0] as string;
 
-  const newVoteResult = {
-    vote_id: voteId,
-    option: selectedOptionId,
-  };
+  const votesResponse = await insertVoteResult(voteId, selectedOptionId);
 
-  await supabase.from("vote_results").insert([newVoteResult]);
+  if (votesResponse.error) {
+    throw new Error(votesResponse.error.message);
+  }
+
+  revalidatePath(`/vote/${voteId}`);
 };
