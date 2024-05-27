@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import voteService from "@/app/services/vote";
+import voteService from "@/services/vote";
 
 export const createVotePost = async (
   values: string[],
