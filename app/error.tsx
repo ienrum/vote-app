@@ -17,7 +17,7 @@ export default function Error({
       error.message === "Auth session missing!"
     ) {
       // Redirect to the login page if the user is not found
-      window.location.href = "/login";
+      router.push("/login");
     }
   }, [error]);
 
