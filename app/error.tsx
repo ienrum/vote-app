@@ -14,7 +14,7 @@ export default function Error({
   useEffect(() => {
     if (
       (error && error.message === "User not found") ||
-      error.digest === "1244950072"
+      error.message === "Auth session missing!"
     ) {
       // Redirect to the login page if the user is not found
       window.location.href = "/login";
