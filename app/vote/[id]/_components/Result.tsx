@@ -12,14 +12,14 @@ const VoteResult = async ({ voteId }: VoteResultProps) => {
   }
 
   return (
-    <div className="mt-4">
+    <>
       {options?.map(({ id, value, count }) => (
         <li key={id}>
           {value}
           <p>{count}</p>
         </li>
       ))}
-    </div>
+    </>
   );
 };
 

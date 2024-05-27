@@ -37,7 +37,7 @@ const VoteForm = () => {
   };
 
   return (
-    <Card className="mt-8">
+    <>
       <h1>투표 생성</h1>
       <form action={createVotePostAction} className="mt-4">
         <Label htmlFor="title">투표 제목:</Label>
@@ -79,7 +79,7 @@ const VoteForm = () => {
           투표 생성
         </Button>
       </form>
-    </Card>
+    </>
   );
 };
 
