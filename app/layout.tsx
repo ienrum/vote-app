@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,11 +19,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <section className="flex flex-col justify-center items-center pt-20">
-          <Card className="m-8 p-8 md:w-1/2 lg:w-1/3">
+          <Card className="mx-8 px-8 pt-8 md:w-1/2 lg:w-1/3">
             <CardContent>{children}</CardContent>
-            <footer>
+            <CardFooter>
               <p>© {new Date().getFullYear()} My Company</p>
-            </footer>
+            </CardFooter>
           </Card>
         </section>
       </body>
