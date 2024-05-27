@@ -6,8 +6,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { createVotePostAction } from "@/app/create-vote/actions";
+import { CardContent, CardDescription, CardTitle } from "@/components/ui/card";
 
 const VoteForm = () => {
   const [title, setTitle] = useState("");
@@ -38,7 +38,7 @@ const VoteForm = () => {
 
   return (
     <>
-      <h1>투표 생성</h1>
+      <CardTitle>투표 생성</CardTitle>
       <form action={createVotePostAction} className="mt-4">
         <Label htmlFor="title">투표 제목:</Label>
         <Input
@@ -72,12 +72,14 @@ const VoteForm = () => {
           />
         ))}
 
-        <Button type="button" onClick={addOption} className="mt-4">
-          옵션 추가
-        </Button>
-        <Button type="submit" className="mt-4">
-          투표 생성
-        </Button>
+        <div className="flex justify-between">
+          <Button type="button" onClick={addOption} className="mt-4">
+            옵션 추가
+          </Button>
+          <Button type="submit" className="mt-4 bg-gray-700">
+            투표 생성
+          </Button>
+        </div>
       </form>
     </>
   );

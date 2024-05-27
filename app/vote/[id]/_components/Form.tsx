@@ -1,6 +1,7 @@
 import { getVote, getVoteOptions } from "@/app/apis/vote";
 import { submitVote } from "@/app/vote/[id]/actions";
 import { Button } from "@/components/ui/button";
+import { CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -23,8 +24,8 @@ export default async function VoteForm({ voteId }: VoteFormProps) {
 
   return (
     <>
-      <h1>{data.title}</h1>
-      <p className="mt-4">{data.description}</p>
+      <CardTitle>{data.title}</CardTitle>
+      <CardTitle className="mt-4">{data.description}</CardTitle>
       <form action={submitVoteWithParmas} className="mt-4">
         {options?.map(({ id, value }) => (
           <Label key={id}>
