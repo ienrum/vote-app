@@ -11,7 +11,9 @@ export default function Error({
   reset: () => void;
 }) {
   const router = useRouter();
+  console.info("Error outside", error);
   useEffect(() => {
+    console.info("Error", error);
     if (
       (error && error.message === "User not found") ||
       error.message.includes("Auth session missing!")
