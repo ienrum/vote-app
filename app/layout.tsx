@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <section className="flex flex-col justify-center items-center pt-20">
-          <Card className="mx-8 px-8 pt-8 md:w-1/2 lg:w-1/3">
+          <Card className="px-8 pt-8 md:w-1/2 lg:w-1/3 w-full border-none  shadow-none">
             <CardContent>{children}</CardContent>
             <CardFooter>
               <p>© {new Date().getFullYear()} My Company</p>
