@@ -14,7 +14,7 @@ export default function Error({
   useEffect(() => {
     if (
       (error && error.message === "User not found") ||
-      error.message === "Auth session missing!"
+      error.message.includes("Auth session missing!")
     ) {
       // Redirect to the login page if the user is not found
       router.push("/login");
