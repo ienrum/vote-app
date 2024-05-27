@@ -1,53 +1,24 @@
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/server";
+import voteService from "@/app/services/vote";
 
-export interface Option {
-  value: string;
-}
+export const createVotePost = async (
+  values: string[],
+  metaData: { title: string; description: string }
+) => {
+  const { id: voteId } = await voteService.createVotes(metaData);
+  await voteService.createOptions(values, voteId);
 
-export interface ResultOption {
-  id: string;
-  value: string;
-  count: number;
-}
+  return voteId;
+};
 
-interface VoteData {
-  title: string;
-  description: string;
-  options: Option[];
-}
-export const createVotePost = async (voteData: VoteData) => {
-  const { options, ...metaData } = voteData;
+export const getVoteResultByMyId = async (voteId: string) => {
+  const data = await voteService.getVoteResultsByMyId(voteId);
 
-  const { data, error: votesError } = await supabase
-    .from("votes")
-    .insert([metaData])
-    .select("*")
-    .single();
-
-  const vote_id = data?.id;
-
-  if (votesError) {
-    throw new Error(votesError.message);
-  }
-
-  const newOptions = options.map((option) => ({
-    ...option,
-    vote_id,
-  }));
-
-  const { error: votesOptionsError } = await supabase
-    .from("vote_results_options")
-    .insert(newOptions);
-
-  if (votesOptionsError) {
-    throw new Error(votesOptionsError.message);
-  }
-
-  return vote_id;
+  return data;
 };
 
 export const getVote = async (id: string) => {
-  const response = await supabase
+  const response = await createClient()
     .from("votes")
     .select("*")
     .eq("id", id)
@@ -56,25 +27,61 @@ export const getVote = async (id: string) => {
   return response;
 };
 
-export const getVoteResultsOptions = async (voteId: string) => {
-  const response = await supabase
-    .from("vote_results_options")
+export const getVoteOptions = async (voteId: string) => {
+  const response = await createClient()
+    .from("option")
     .select("*")
     .eq("vote_id", voteId);
 
   return response;
 };
 
-export const insertVoteResult = async (voteId: string, optionId: string) => {
-  const response = await supabase
+export const insertVoteResult = async (optionId: string, vote_id: string) => {
+  const { data } = await createClient().auth.getUser();
+
+  if (!data?.user?.id) {
+    throw new Error("User not found");
+  }
+
+  const { data: result, error } = await createClient()
     .from("vote_results")
     .insert([
       {
-        vote_id: voteId,
-        option: optionId,
+        user_id: data?.user?.id,
+        option_id: optionId,
+        vote_id,
       },
     ])
-    .select("*");
+    .select("*")
+    .single();
 
-  return response;
+  if (error) {
+    throw new Error(error.message);
+  }
+  return result;
+};
+
+export const upCountOption = async (optionId: string) => {
+  const { data } = await createClient().auth.getUser();
+
+  if (!data?.user?.id) {
+    throw new Error("User not found");
+  }
+
+  const { data: option, error: optionError } = await createClient()
+    .from("option")
+    .select("*")
+    .eq("id", optionId)
+    .single();
+
+  const { data: result, error } = await createClient()
+    .from("option")
+    .update({ count: option?.count ? option.count + 1 : 1 })
+    .eq("id", optionId)
+    .single();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+  return result;
 };

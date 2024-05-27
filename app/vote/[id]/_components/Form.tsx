@@ -1,4 +1,4 @@
-import { getVote, getVoteResultsOptions } from "@/app/apis/vote";
+import { getVote, getVoteOptions } from "@/app/apis/vote";
 import { submitVote } from "@/app/vote/[id]/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,7 +10,7 @@ interface VoteFormProps {
 
 export default async function VoteForm({ voteId }: VoteFormProps) {
   const { data, error } = await getVote(voteId);
-  const { data: options } = await getVoteResultsOptions(voteId);
+  const { data: options } = await getVoteOptions(voteId);
   const submitVoteWithParmas = submitVote.bind(null, voteId);
 
   if (error) {

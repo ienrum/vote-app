@@ -1,6 +1,10 @@
-import { Button } from "@/components/ui/button";
+"use client";
+
+import { signInWithKakao } from "@/app/apis/auth";
 import { Card } from "@/components/ui/card";
-import Link from "next/link";
+import kakoImage from "@/public/kakao_login.png";
+import Image from "next/image";
+
 export default function Home() {
   return (
     <Card className="mt-8">
@@ -8,9 +12,14 @@ export default function Home() {
       <h3 className="mt-4">
         사용자가 간편하게 일정을 조율하고 투표할 수 있도록 돕는 서비스입니다.
       </h3>
-      <Link href="/create-vote">
-        <Button className="mt-4">투표 생성</Button>
-      </Link>
+      <Image
+        src={kakoImage}
+        alt="plus"
+        className=" cursor-pointer"
+        onClick={() => {
+          signInWithKakao();
+        }}
+      />
     </Card>
   );
 }
