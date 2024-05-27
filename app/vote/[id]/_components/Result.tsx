@@ -22,11 +22,11 @@ const VoteResult = async ({ voteId }: VoteResultProps) => {
         {options?.map(({ id, value, count }) => (
           <li key={id} className="flex justify-start items-center ">
             <p
-              className="w-full bg-slate-white h-12 flex items-center px-2 rounded-md  border-slate-300 border-2 text-slate-800 justify-between bg-slate-500"
+              className="w-full bg-slate-white h-12 flex items-center px-2 rounded-md  border-slate-300 border-2 text-slate-800 justify-between bg-white"
               style={{
-                background: `linear-gradient(to right, rgb(100 116 139 / var(--tw-bg-opacity)) ${percentageOf(
+                background: `linear-gradient(to right, rgb(203 213 225 / var(--tw-bg-opacity)) ${percentageOf(
                   count ?? 0
-                )}, #e2e8f0 ${percentageOf(count ?? 0)})`,
+                )}, white ${percentageOf(count ?? 0)})`,
               }}
             >
               <span>{value}</span>
