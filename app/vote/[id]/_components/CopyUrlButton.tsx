@@ -6,9 +6,12 @@ const CopyUrlButton = () => {
   const [copied, setCopied] = useState(false);
   const currentUrl = typeof window !== "undefined" ? window.location.href : "";
 
-  const copyToClipboard = async () => {
+  const copyToClipboard = () => {
+    if (typeof navigator === "undefined" || !navigator.clipboard) {
+      return;
+    }
     try {
-      await navigator.clipboard.writeText(currentUrl);
+      navigator.clipboard.writeText(currentUrl);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000); // 2초 후에 다시 false로 설정
     } catch (err) {
