@@ -1,18 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { createVotePostAction } from "@/app/create-vote/actions";
-import { CardContent, CardDescription, CardTitle } from "@/components/ui/card";
+import { CardTitle } from "@/components/ui/card";
+
+interface Option {
+  value: string;
+}
 
 const VoteForm = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [options, setOptions] = useState<{ value: string }[]>([
+  const [options, setOptions] = useState<Option[]>([
     {
       value: "",
     },
@@ -20,10 +23,9 @@ const VoteForm = () => {
       value: "",
     },
   ]);
-  const router = useRouter();
 
   const addOption = () => {
-    const newOptions: { value: string }[] = [...options];
+    const newOptions: Option[] = [...options];
     newOptions.push({
       value: "",
     });
@@ -31,7 +33,7 @@ const VoteForm = () => {
   };
 
   const handleChangeOption = (index: number, value: string) => {
-    const newOptions: { value: string }[] = [...options];
+    const newOptions: Option[] = [...options];
     newOptions[index].value = value;
     setOptions(newOptions);
   };
