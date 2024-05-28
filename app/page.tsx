@@ -41,6 +41,10 @@ export default async function Home() {
           name="twitter:image"
           content="https://www.example.com/path/to/your/image.jpg"
         />
+        <meta
+          name="google-adsense-account"
+          content="ca-pub-8930752195122705"
+        ></meta>
       </Head>
       <CardTitle>투표 사이트</CardTitle>
       <CardDescription className="mt-4">
