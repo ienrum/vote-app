@@ -23,7 +23,7 @@ export default async function Vote({ params: { id: voteId } }: PageProps) {
   return (
     <div className="flex flex-col gap-8">
       {voteResult ? (
-        <VoteResult voteId={voteId} />
+        <VoteResult data={data} voteId={voteId} />
       ) : (
         <VoteForm data={data} options={options} voteId={voteId} />
       )}
