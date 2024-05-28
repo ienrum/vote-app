@@ -28,23 +28,18 @@ export default async function Home() {
           property="og:description"
           content="간단하고 직관적인 투표 웹 애플리케이션입니다. 투표를 하고 실시간으로 결과를 확인하세요."
         />
-        <meta property="og:image" content="/kakao_login.png" />
-        <meta property="og:url" content="/kakao_login.png" />
+        <meta property="og:image" content="/rectangle_og.png" />
+        <meta property="og:title" content="간단한 투표 웹 사이트" />
+        <meta property="og:url" content="https://vote-app-six.vercel.app/" />
         <meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="간단한 투표 웹 애플리케이션" />
+        <meta name="twitter:card" content="/rectangle_og.png" />
+        <meta name="twitter:title" content="간단한 투표 웹 사이트" />
         <meta
           name="twitter:description"
           content="간단하고 직관적인 투표 웹 애플리케이션입니다. 투표를 하고 실시간으로 결과를 확인하세요."
         />
-        <meta
-          name="twitter:image"
-          content="https://www.example.com/path/to/your/image.jpg"
-        />
-        <meta
-          name="google-adsense-account"
-          content="ca-pub-8930752195122705"
-        ></meta>
+        <meta name="twitter:image" content="/rectangle_og.png" />
+        <meta name="google-adsense-account" content="ca-pub-8930752195122705" />
       </Head>
       <CardTitle>투표 사이트</CardTitle>
       <CardDescription className="mt-4">
