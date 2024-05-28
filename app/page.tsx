@@ -5,7 +5,7 @@ import { Metadata } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import Script from "next/script";
-export const metaData: Metadata = {
+export const metadata: Metadata = {
   metadataBase: new URL("https://vote-app-six.vercel.app/"),
   title: "간단한 투표 웹 애플리케이션",
   description:
