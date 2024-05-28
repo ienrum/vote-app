@@ -4,7 +4,6 @@ import { createClient } from "@/lib/supabase/server";
 import { Metadata } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import Script from "next/script";
 export const metadata: Metadata = {
   metadataBase: new URL("https://vote-app-six.vercel.app/"),
   title: "간단한 투표 웹 애플리케이션",
@@ -75,12 +74,6 @@ export default async function Home() {
         <meta name="twitter:image" content="/rectangle_og.png" />
         <meta name="google-adsense-account" content="ca-pub-8930752195122705" />
       </Head>
-      <Script
-        async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8930752195122705"
-        strategy="lazyOnload"
-        crossOrigin="anonymous"
-      />
       <CardTitle>투표 사이트</CardTitle>
       <CardDescription className="mt-4">
         사용자가 간편하게 투표할 수 있도록 돕는 서비스입니다.
