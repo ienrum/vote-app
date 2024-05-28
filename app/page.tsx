@@ -21,6 +21,7 @@ export const metadata: Metadata = {
         alt: "간단한 투표 웹 애플리케이션",
       },
     ],
+    url: "https://vote-app-six.vercel.app/",
   },
   twitter: {
     card: "summary",
