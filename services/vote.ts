@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
 
 export const VOTES_TABLE = "votes";
 export const VOTES_RESULTS_TABLE = "vote_results";
@@ -12,13 +13,10 @@ class VoteService {
     const { data: userData, error: userError } =
       await createClient().auth.getUser();
 
-    if (userError) {
-      throw new Error(userError.message);
+    if (userError || !userData || !userData?.user?.id) {
+      redirect("/login");
     }
 
-    if (!userData || !userData?.user?.id) {
-      throw new Error("User not found");
-    }
     const { data, error } = await createClient()
       .from(VOTES_TABLE)
       .insert({ ...insertInfo, author_id: userData?.user.id })
@@ -53,12 +51,8 @@ class VoteService {
     const { data: userData, error: userError } =
       await createClient().auth.getUser();
 
-    if (userError) {
-      throw new Error(userError.message);
-    }
-
-    if (!userData || !userData?.user.id) {
-      throw new Error("User not found");
+    if (userError || !userData || !userData?.user.id) {
+      redirect("/login");
     }
 
     const { data, error } = await createClient()

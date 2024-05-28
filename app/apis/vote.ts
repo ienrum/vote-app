@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import voteService from "@/services/vote";
+import { redirect } from "next/navigation";
 
 export const createVotePost = async (
   values: string[],
@@ -37,17 +38,18 @@ export const getVoteOptions = async (voteId: string) => {
 };
 
 export const insertVoteResult = async (optionId: string, vote_id: string) => {
-  const { data } = await createClient().auth.getUser();
+  const { data: userData, error: userError } =
+    await createClient().auth.getUser();
 
-  if (!data?.user?.id) {
-    throw new Error("User not found");
+  if (!userData?.user?.id || userError) {
+    redirect("/login");
   }
 
   const { data: result, error } = await createClient()
     .from("vote_results")
     .insert([
       {
-        user_id: data?.user?.id,
+        user_id: userData?.user?.id,
         option_id: optionId,
         vote_id,
       },
@@ -62,10 +64,11 @@ export const insertVoteResult = async (optionId: string, vote_id: string) => {
 };
 
 export const upCountOption = async (optionId: string) => {
-  const { data } = await createClient().auth.getUser();
+  const { data: userData, error: userError } =
+    await createClient().auth.getUser();
 
-  if (!data?.user?.id) {
-    throw new Error("User not found");
+  if (!userData?.user?.id || userError) {
+    redirect("/login");
   }
 
   const { data: option, error: optionError } = await createClient()
