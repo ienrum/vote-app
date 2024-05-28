@@ -4,28 +4,25 @@ import { Button } from "@/components/ui/button";
 import { CardContent, CardDescription, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Tables } from "@/types/supabase";
 
 interface VoteFormProps {
+  data: Tables<"votes"> | null;
+  options: Tables<"option">[] | null;
   voteId: string;
 }
 
-export default async function VoteForm({ voteId }: VoteFormProps) {
-  const { data, error } = await getVote(voteId);
-  const { data: options } = await getVoteOptions(voteId);
+export default async function VoteForm({
+  data,
+  options,
+  voteId,
+}: VoteFormProps) {
   const submitVoteWithParmas = submitVote.bind(null, voteId);
-
-  if (error) {
-    throw new Error(error.message);
-  }
-
-  if (!data) {
-    throw new Error("투표를 찾을 수 없습니다.");
-  }
 
   return (
     <>
-      <CardTitle>{data.title}</CardTitle>
-      <CardDescription className="mt-4">{data.description}</CardDescription>
+      <CardTitle>{data?.title}</CardTitle>
+      <CardDescription className="mt-4">{data?.description}</CardDescription>
       <form action={submitVoteWithParmas} className="mt-4">
         <ul className="flex flex-col gap-4">
           {options?.map(({ id, value }) => (
