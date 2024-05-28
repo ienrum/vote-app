@@ -7,10 +7,21 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { createVotePostAction } from "@/app/create-vote/actions";
 import { CardTitle } from "@/components/ui/card";
+import { useFormStatus } from "react-dom";
 
 interface Option {
   value: string;
 }
+
+const Submit = () => {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button type="submit" className="mt-4 bg-gray-700" disabled={pending}>
+      {pending ? "투표 생성 중..." : "투표 생성"}
+    </Button>
+  );
+};
 
 const VoteForm = () => {
   const [title, setTitle] = useState("");
@@ -78,9 +89,7 @@ const VoteForm = () => {
           <Button type="button" onClick={addOption} className="mt-4">
             옵션 추가
           </Button>
-          <Button type="submit" className="mt-4 bg-gray-700">
-            투표 생성
-          </Button>
+          <Submit />
         </div>
       </form>
     </>

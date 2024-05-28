@@ -6,12 +6,23 @@ import { CardDescription, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tables } from "@/types/supabase";
+import { useFormStatus } from "react-dom";
 
 interface VoteFormProps {
   data: Tables<"votes"> | null;
   options: Tables<"option">[] | null;
   voteId: string;
 }
+
+const Submit = () => {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button type="submit" className="mt-4" disabled={pending}>
+      {pending ? "투표 중..." : "투표하기"}
+    </Button>
+  );
+};
 
 export default function VoteForm({ data, options, voteId }: VoteFormProps) {
   const submitVoteWithParmas = submitVote.bind(null, voteId);
@@ -41,9 +52,7 @@ export default function VoteForm({ data, options, voteId }: VoteFormProps) {
             </li>
           ))}
         </ul>
-        <Button type="submit" className="mt-4">
-          투표 제출
-        </Button>
+        <Submit />
       </form>
     </>
   );
