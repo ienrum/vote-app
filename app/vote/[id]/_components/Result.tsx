@@ -34,7 +34,9 @@ const VoteResult = async ({ data, voteId }: VoteResultProps) => {
                 )}, white ${percentageOf(count ?? 0)})`,
               }}
             >
-              <span>{value}</span>
+              <span>
+                {value} ({count}/{totalCount})
+              </span>
               {percentageOf(count ?? 0)}
             </p>
           </li>
