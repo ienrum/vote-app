@@ -1,7 +1,8 @@
-import { getVote, getVoteOptions } from "@/app/apis/vote";
+"use client";
+
 import { submitVote } from "@/app/vote/[id]/actions";
 import { Button } from "@/components/ui/button";
-import { CardContent, CardDescription, CardTitle } from "@/components/ui/card";
+import { CardDescription, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tables } from "@/types/supabase";
@@ -12,11 +13,7 @@ interface VoteFormProps {
   voteId: string;
 }
 
-export default async function VoteForm({
-  data,
-  options,
-  voteId,
-}: VoteFormProps) {
+export default function VoteForm({ data, options, voteId }: VoteFormProps) {
   const submitVoteWithParmas = submitVote.bind(null, voteId);
 
   return (
