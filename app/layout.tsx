@@ -4,7 +4,6 @@ import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import Script from "next/script";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {

@@ -1,6 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
 import voteService from "@/services/vote";
-import { redirect } from "next/navigation";
 
 export const createVotePost = async (
   values: string[],

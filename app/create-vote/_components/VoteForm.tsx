@@ -18,7 +18,7 @@ const Submit = () => {
 
   return (
     <Button type="submit" className="mt-4 bg-gray-700" disabled={pending}>
-      {pending ? "투표 생성 중..." : "투표 생성"}
+      {pending ? "Submitting..." : "Submit"}
     </Button>
   );
 };
@@ -51,9 +51,9 @@ const VoteForm = () => {
 
   return (
     <>
-      <CardTitle>투표 생성</CardTitle>
+      <CardTitle>Create a Vote</CardTitle>
       <form action={createVotePostAction} className="mt-4">
-        <Label htmlFor="title">투표 제목:</Label>
+        <Label htmlFor="title">Title :</Label>
         <Input
           id="title"
           name="title"
@@ -63,7 +63,7 @@ const VoteForm = () => {
           className="mt-2 mb-4"
         />
 
-        <Label htmlFor="description">설명:</Label>
+        <Label htmlFor="description">Description :</Label>
         <Textarea
           id="description"
           name="description"
@@ -73,7 +73,7 @@ const VoteForm = () => {
           className="mt-2 mb-4"
         />
 
-        <Label>투표 옵션:</Label>
+        <Label>Options :</Label>
         {options.map((option, index) => (
           <Input
             key={index}
@@ -87,7 +87,7 @@ const VoteForm = () => {
 
         <div className="flex justify-between">
           <Button type="button" onClick={addOption} className="mt-4">
-            옵션 추가
+            Add Option
           </Button>
           <Submit />
         </div>

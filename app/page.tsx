@@ -4,31 +4,31 @@ import { Metadata } from "next";
 import Link from "next/link";
 export const metadata: Metadata = {
   metadataBase: new URL("https://vote-app-six.vercel.app/"),
-  title: "간단한 투표 웹 애플리케이션",
+  title: "Simple Voting Web Application",
   description:
-    "간단하고 직관적인 투표 웹 애플리케이션입니다. 투표를 하고 실시간으로 결과를 확인하세요.",
-  keywords: "투표, 설문조사, 웹 애플리케이션, 실시간, 간단한, 직관적인",
+    "A simple and intuitive voting web application. Vote and check the results in real-time.",
+  keywords: "voting, survey, web application, real-time, simple, intuitive",
   openGraph: {
-    title: "간단한 투표 웹 애플리케이션",
+    title: "Simple Voting Web Application",
     description:
-      "간단하고 직관적인 투표 웹 애플리케이션입니다. 투표를 하고 실시간으로 결과를 확인하세요.",
+      "A simple and intuitive voting web application. Vote and check the results in real-time.",
     images: [
       {
         url: "/rectangle_og.png",
-        alt: "간단한 투표 웹 애플리케이션",
+        alt: "Simple Voting Web Application",
       },
     ],
     url: "https://vote-app-six.vercel.app/",
   },
   twitter: {
     card: "summary",
-    title: "간단한 투표 웹 사이트",
+    title: "Simple Voting Web Application",
     description:
-      "간단하고 직관적인 투표 웹 애플리케이션입니다. 투표를 하고 실시간으로 결과를 확인하세요.",
+      "A simple and intuitive voting web application. Vote and check the results in real-time.",
     images: [
       {
         url: "/rectangle_og.png",
-        alt: "간단한 투표 웹 애플리케이션",
+        alt: "Simple Voting Web Application",
       },
     ],
   },
@@ -37,12 +37,13 @@ export const metadata: Metadata = {
 export default async function Home() {
   return (
     <>
-      <CardTitle>투표 사이트</CardTitle>
+      <CardTitle>votap</CardTitle>
       <CardDescription className="mt-4">
-        사용자가 간편하게 투표할 수 있도록 돕는 서비스입니다.
+        A simple and intuitive voting web application. Vote and check the
+        results in real-time.
       </CardDescription>
       <Link href="/create-vote">
-        <Button className="mt-4">투표 생성</Button>
+        <Button className="mt-4">Create a Vote</Button>
       </Link>
     </>
   );

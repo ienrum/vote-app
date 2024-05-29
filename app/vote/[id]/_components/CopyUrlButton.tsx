@@ -22,9 +22,9 @@ const CopyUrlButton = () => {
   return (
     <div>
       <Button variant="link" onClick={copyToClipboard}>
-        url 공유하기
+        Copy URL
       </Button>
-      {copied && <span>URL이 복사되었습니다!</span>}
+      {copied && <span>Copied!</span>}
     </div>
   );
 };

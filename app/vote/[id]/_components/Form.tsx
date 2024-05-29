@@ -19,7 +19,7 @@ const Submit = () => {
 
   return (
     <Button type="submit" className="mt-4" disabled={pending}>
-      {pending ? "투표 중..." : "투표하기"}
+      {pending ? "Submitting..." : "Submit"}
     </Button>
   );
 };

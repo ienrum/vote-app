@@ -43,7 +43,7 @@ const VoteResult = async ({ data, voteId }: VoteResultProps) => {
         ))}
       </ul>
       <Link href="/">
-        <Button className="mt-4">돌아가기</Button>
+        <Button className="mt-4">Back to Home</Button>
       </Link>
     </>
   );
