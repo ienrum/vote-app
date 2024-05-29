@@ -30,25 +30,23 @@ class VoteService {
       .select("*")
       .single();
 
-    console.log(data);
-
     if (error) {
       throw new Error(error.message);
     }
+
+    return data;
   }
 
   async createVotes(insertInfo: { title: string; description: string }) {
-    const userId = this.getMyId();
-
-    console.log(userId);
+    let userId = this.getMyId();
 
     if (!userId) {
-      await this.setMyId();
+      userId = (await this.setMyId()).id;
     }
 
-    const { data, error } = await createClient()
+    const { data: responseData, error } = await createClient()
       .from(VOTES_TABLE)
-      .insert([{ ...insertInfo, author: userId! }])
+      .insert([{ ...insertInfo, author: userId }])
       .select("id")
       .single();
 
@@ -56,7 +54,7 @@ class VoteService {
       throw new Error(error.message);
     }
 
-    return data;
+    return responseData;
   }
 
   async createOptions(values: string[], vote_id: string) {

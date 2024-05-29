@@ -37,10 +37,10 @@ export const getVoteOptions = async (voteId: string) => {
 };
 
 export const insertVoteResult = async (optionId: string, vote_id: string) => {
-  const myId = voteService.getMyId();
+  let myId = voteService.getMyId();
 
   if (!myId) {
-    await voteService.setMyId();
+    myId = (await voteService.setMyId()).id;
   }
 
   const { data: result, error } = await createClient()
@@ -62,10 +62,10 @@ export const insertVoteResult = async (optionId: string, vote_id: string) => {
 };
 
 export const upCountOption = async (optionId: string) => {
-  const myId = voteService.getMyId();
+  let myId = voteService.getMyId();
 
   if (!myId) {
-    await voteService.setMyId();
+    myId = (await voteService.setMyId()).id;
   }
 
   const { data: option, error: optionError } = await createClient()
