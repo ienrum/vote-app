@@ -19,14 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <Script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8930752195122705"
-          strategy="lazyOnload"
-          crossOrigin="anonymous"
-        />
-      </head>
+      <head></head>
       <body className={inter.className}>
         <section className="flex flex-col justify-center items-center pt-20">
           <Card className="px-8 pt-8 md:w-1/2 lg:w-1/3 w-full border-none  shadow-none">

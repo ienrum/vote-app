@@ -11,10 +11,6 @@ export default function Error({
   reset: () => void;
 }) {
   const router = useRouter();
-  useEffect(() => {
-    // Redirect to the login page if the user is not found
-    router.push("/login");
-  }, [error]);
 
   return (
     <div>

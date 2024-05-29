@@ -1,25 +1,54 @@
 import { createClient } from "@/lib/supabase/server";
+import { randomUUID } from "crypto";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+
+import { v4 as uuidv4 } from "uuid";
 
 export const VOTES_TABLE = "votes";
 export const VOTES_RESULTS_TABLE = "vote_results";
 export const OPTION_TABLE = "option";
-export const USER_TABLE = "user";
+export const USERS_TABLE = "users";
 
 class VoteService {
-  constructor() {}
+  constructor(private myId?: string) {}
+
+  getMyId() {
+    const cookieStore = cookies();
+    this.myId = cookieStore.get("userId")?.value;
+    return this.myId;
+  }
+
+  async setMyId() {
+    const userId = uuidv4();
+    const cookieStore = cookies();
+    cookieStore.set("userId", userId);
+
+    const { data, error } = await createClient()
+      .from(USERS_TABLE)
+      .upsert({ id: userId })
+      .select("*")
+      .single();
+
+    console.log(data);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+  }
 
   async createVotes(insertInfo: { title: string; description: string }) {
-    const { data: userData, error: userError } =
-      await createClient().auth.getUser();
+    const userId = this.getMyId();
 
-    if (userError || !userData || !userData?.user?.id) {
-      redirect("/login");
+    console.log(userId);
+
+    if (!userId) {
+      await this.setMyId();
     }
 
     const { data, error } = await createClient()
       .from(VOTES_TABLE)
-      .insert({ ...insertInfo, author_id: userData?.user.id })
+      .insert([{ ...insertInfo, author: userId! }])
       .select("id")
       .single();
 
@@ -48,17 +77,12 @@ class VoteService {
   }
 
   async getVoteResultsByMyId(voteId: string) {
-    const { data: userData, error: userError } =
-      await createClient().auth.getUser();
-
-    if (userError || !userData || !userData?.user.id) {
-      redirect("/login");
-    }
+    const userId = this.getMyId();
 
     const { data, error } = await createClient()
       .from(VOTES_RESULTS_TABLE)
       .select("*")
-      .eq("user_id", userData?.user.id)
+      .eq("user_id", userId!)
       .eq("vote_id", voteId)
       .single();
 

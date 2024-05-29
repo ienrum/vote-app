@@ -1,9 +1,6 @@
-import Page from "@/app/login/page";
 import { Button } from "@/components/ui/button";
-import { Card, CardDescription, CardTitle } from "@/components/ui/card";
-import { createClient } from "@/lib/supabase/server";
+import { CardDescription, CardTitle } from "@/components/ui/card";
 import { Metadata } from "next";
-import Head from "next/head";
 import Link from "next/link";
 export const metadata: Metadata = {
   metadataBase: new URL("https://vote-app-six.vercel.app/"),
@@ -38,12 +35,6 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const { data: userData, error } = await createClient().auth.getUser();
-
-  if (error || !userData) {
-    return <Page />;
-  }
-
   return (
     <>
       <CardTitle>투표 사이트</CardTitle>
