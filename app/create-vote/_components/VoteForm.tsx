@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { ButtonHTMLAttributes, KeyboardEvent, useRef, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
@@ -13,11 +13,13 @@ interface Option {
   value: string;
 }
 
-const Submit = () => {
+interface SubmitProps extends ButtonHTMLAttributes<"button"> {}
+
+const Submit = ({ type }: SubmitProps) => {
   const { pending } = useFormStatus();
 
   return (
-    <Button type="submit" className="mt-4 bg-gray-700" disabled={pending}>
+    <Button type={type} className="mt-4 bg-gray-700" disabled={pending}>
       {pending ? "Submitting..." : "Submit"}
     </Button>
   );
@@ -34,15 +36,24 @@ const VoteForm = () => {
       value: "",
     },
   ]);
+  const [step, setStep] = useState(0);
 
-  const addOption = () => {
-    const newOptions: Option[] = [...options];
-    newOptions.push({
-      value: "",
-    });
-    setOptions(newOptions);
+  const nextStep = () => {
+    if (step >= 2) {
+      const newOptions: Option[] = [...options];
+      newOptions.push({
+        value: "",
+      });
+      setOptions(newOptions);
+    }
+    setStep((step) => step + 1);
   };
 
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+    }
+  };
   const handleChangeOption = (index: number, value: string) => {
     const newOptions: Option[] = [...options];
     newOptions[index].value = value;
@@ -52,7 +63,11 @@ const VoteForm = () => {
   return (
     <>
       <CardTitle>Create a Vote</CardTitle>
-      <form action={createVotePostAction} className="mt-4">
+      <form
+        action={createVotePostAction}
+        className="mt-4"
+        onKeyDown={handleKeyDown}
+      >
         <Label htmlFor="title">Title :</Label>
         <Input
           id="title"
@@ -63,33 +78,41 @@ const VoteForm = () => {
           className="mt-2 mb-4"
         />
 
-        <Label htmlFor="description">Description :</Label>
-        <Textarea
-          id="description"
-          name="description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          required
-          className="mt-2 mb-4"
-        />
+        {step >= 1 && (
+          <>
+            <Label htmlFor="description">Description :</Label>
+            <Textarea
+              id="description"
+              name="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              required
+              className="mt-2 mb-4"
+            />
+          </>
+        )}
 
-        <Label>Options :</Label>
-        {options.map((option, index) => (
-          <Input
-            key={index}
-            name="option"
-            value={option.value}
-            onChange={(e) => handleChangeOption(index, e.target.value)}
-            required
-            className="mt-2 mb-2"
-          />
-        ))}
+        {step >= 2 && (
+          <>
+            <Label>Options :</Label>
+            {options.map((option, index) => (
+              <Input
+                key={index}
+                name="option"
+                value={option.value}
+                onChange={(e) => handleChangeOption(index, e.target.value)}
+                required
+                className="mt-2 mb-2"
+              />
+            ))}
+          </>
+        )}
 
         <div className="flex justify-between">
-          <Button type="button" onClick={addOption} className="mt-4">
-            Add Option
+          <Button type="button" onClick={nextStep} className="mt-4">
+            {step >= 2 ? "Add Option" : "Next step"}
           </Button>
-          <Submit />
+          {step >= 2 && <Submit type={step >= 2 ? "submit" : "button"} />}
         </div>
       </form>
     </>
