@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { createVotePostAction } from "@/app/create-vote/actions";
+import { createVotePostAction } from "@/app/actions";
 import { CardTitle } from "@/components/ui/card";
 import { useFormStatus } from "react-dom";
 

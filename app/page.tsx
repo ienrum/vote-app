@@ -1,7 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { CardDescription, CardTitle } from "@/components/ui/card";
+import VoteForm from "@/app/_components/VoteForm";
 import { Metadata } from "next";
-import Link from "next/link";
 export const metadata: Metadata = {
   metadataBase: new URL("https://vote-app-six.vercel.app/"),
   title: "Simple Voting Web Application",
@@ -35,16 +33,5 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  return (
-    <>
-      <CardTitle>votap</CardTitle>
-      <CardDescription className="mt-4">
-        A simple and intuitive voting web application. Vote and check the
-        results in real-time.
-      </CardDescription>
-      <Link href="/create-vote">
-        <Button className="mt-4">Create a Vote</Button>
-      </Link>
-    </>
-  );
+  return <VoteForm />;
 }
