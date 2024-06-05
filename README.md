@@ -19,3 +19,6 @@
 ![스크린샷 2024-05-29 033215](https://github.com/ienrum/vote-app/assets/137467530/63f5a4ae-b6ca-4545-b6d3-2016ac07abfb)
 ### 투표 결과
 ![square_og](https://github.com/ienrum/vote-app/assets/137467530/b4f29580-50d3-479c-a433-a9957744a2ba)
+
+### 배포 링크
+https://vote-app-six.vercel.app/
